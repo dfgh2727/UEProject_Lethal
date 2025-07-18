@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "LCEnum.generated.h"
+#include "LCStruct.generated.h"
 
 /**
  * 
  */
+
 UCLASS()
-class PROJECT_LETHAL_API ULCEnum : public UObject
+class PROJECT_LETHAL_API ULCStruct : public UObject
 {
 	GENERATED_BODY()
 	
