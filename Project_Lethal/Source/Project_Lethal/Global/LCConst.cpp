@@ -3,3 +3,4 @@
 
 #include "Global/LCConst.h"
 
+FName ULCConst::AI::AIDataName = TEXT("AIData");

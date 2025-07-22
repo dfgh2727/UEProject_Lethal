@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+#include <Global/LCEnum.h>
 #include "MonsterDataTable.generated.h"
+
 
 /**
  * 
@@ -47,7 +49,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	FAIData Data;
 
-	//EAIState AIState = EAIState::Idle;
+	EAIState AIState = EAIState::Idle;
 	double CurHP = 100;
 	class APawn* SelfPawn = nullptr;
 	AActor* TargetActor = nullptr;
