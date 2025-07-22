@@ -5,6 +5,10 @@
 #include "MonsterAIController.h"
 #include "Components/CapsuleComponent.h"
 #include "BehaviorTree/BlackboardComponent.h" 
+#include "Engine/DataTable.h"
+#include "Monster/MonsterDataTable.h"
+#include "Engine/SkeletalMesh.h"
+
 
 // Sets default values
 AMonster::AMonster()
@@ -14,6 +18,20 @@ AMonster::AMonster()
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMonster::OnComponentBeginOverlap);
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
+
+	// 임시로 데이터 테이블 불러오기
+	FString DataPath = TEXT("/Game/Blueprints/Monster/Data/DT_MonsterDataTable.DT_MonsterDataTable");
+	ConstructorHelpers::FObjectFinder<UDataTable> FinderDataTables(*DataPath);
+
+
+
+	if (true == FinderDataTables.Succeeded())
+	{
+		MonsterDataTable = FinderDataTables.Object;
+	}
+
+	
+	
 }
 
 // Called when the game starts or when spawned
@@ -24,9 +42,16 @@ void AMonster::BeginPlay()
 		//(GMLOG, Error, TEXT("%S(%u)> if (ItemDataKey == TEXT("") || true == ItemDataKey.IsEmpty())"), __FUNCTION__, __LINE__);
 		return;
 	}
+	DataKey;
 
+	if (nullptr != MonsterDataTable)
+	{
+		Data = MonsterDataTable->FindRow<FMonsterDataRow>(*DataKey, nullptr);
+	}
+
+	DataKey;
 	// 수정 필요
-	const FMonsterDataRow* FindData = nullptr;// UGlobalDataTable::GetMonsterData(GetWorld(), DataKey);
+	const FMonsterDataRow* FindData = Data;
 
 	if (nullptr == FindData) return;
 	
@@ -38,7 +63,9 @@ void AMonster::BeginPlay()
 	AIData->PlayData.Data = FindData->AIData;
 	AIData->PlayData.OriginPos = GetActorLocation();
 
+	// BlackBoard의 AIData 설정해주기
 	Con->GetBlackboardComponent()->SetValueAsObject(TEXT("AIData"), AIData);
+	
 
 	GetMesh()->SetSkeletalMesh(FindData->Mesh);
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);

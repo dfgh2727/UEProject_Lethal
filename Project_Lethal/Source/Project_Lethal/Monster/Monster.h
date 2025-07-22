@@ -38,5 +38,11 @@ public:
 private:
 	const FMonsterDataRow* Data = nullptr;
 
+	UPROPERTY(VisibleAnywhere, Category = "Data")
 	class UAIDataObject* AIData = nullptr;
+
+
+	UPROPERTY(VisibleAnywhere, Category = "Data")
+	class UDataTable* DataTables = nullptr;
+	class UDataTable* MonsterDataTable = nullptr;
 };
