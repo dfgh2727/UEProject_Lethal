@@ -13,5 +13,13 @@ UCLASS()
 class PROJECT_LETHAL_API ULCConst : public UObject
 {
 	GENERATED_BODY()
-	
+
+public:
+	#pragma region Minha Name
+	class AI
+	{
+	public:
+		static FName AIDataName;
+	};
+	#pragma endregion 
 };
