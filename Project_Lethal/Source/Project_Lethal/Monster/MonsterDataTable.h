@@ -58,6 +58,9 @@ public:
 
 	double CurPatrolTime = 0.0f;
 	TArray<FVector> PatrolPos;
+
+	class AMonster* SelfAnimPawn = nullptr;
+	//class UMonsterAnimInstance* MonsterAninInstance = nullptr;
 };
 
 UCLASS(BlueprintType)
@@ -92,11 +95,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	class USkeletalMesh* Mesh = nullptr;
 
-	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-	TMap<EAIState, UAnimMontage*> Animations;*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	TMap<EAIState, UAnimMontage*> Animations;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	TSubclassOf<UAnimInstance> AnimationBluePrint;
+
+	
 };
 
 UCLASS()

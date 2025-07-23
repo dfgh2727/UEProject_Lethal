@@ -8,6 +8,7 @@
 #include "Engine/DataTable.h"
 #include "Monster/MonsterDataTable.h"
 #include "Engine/SkeletalMesh.h"
+#include "Monster/MonsterAnimInstance.h" // Add this include to resolve UMonsterAnimInstance
 
 
 // Sets default values
@@ -42,14 +43,12 @@ void AMonster::BeginPlay()
 		//(GMLOG, Error, TEXT("%S(%u)> if (ItemDataKey == TEXT("") || true == ItemDataKey.IsEmpty())"), __FUNCTION__, __LINE__);
 		return;
 	}
-	DataKey;
 
 	if (nullptr != MonsterDataTable)
 	{
 		Data = MonsterDataTable->FindRow<FMonsterDataRow>(*DataKey, nullptr);
 	}
 
-	DataKey;
 	// 수정 필요
 	const FMonsterDataRow* FindData = Data;
 
@@ -61,6 +60,7 @@ void AMonster::BeginPlay()
 
 	AIData = NewObject<UAIDataObject>(this);
 	AIData->PlayData.Data = FindData->AIData;
+	AIData->PlayData.SelfAnimPawn = this;
 	AIData->PlayData.OriginPos = GetActorLocation();
 
 	// BlackBoard의 AIData 설정해주기
@@ -71,6 +71,18 @@ void AMonster::BeginPlay()
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	GetMesh()->SetAnimInstanceClass(FindData->AnimationBluePrint);
 
+
+   
+
+    // Replace the problematic line with the following:
+    UMonsterAnimInstance* MonsterAnimInstance = Cast<UMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+    if (nullptr != MonsterAnimInstance)
+    {
+		for (auto AnimPair : FindData->Animations)
+		{
+			MonsterAnimInstance->AnimMontages.Add(static_cast<int>(AnimPair.Key), AnimPair.Value);
+		}
+    }   
 	Super::BeginPlay();
 	
 }
@@ -91,5 +103,16 @@ void AMonster::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AMonster::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+}
+
+void AMonster::ChangeAnimation(int _CurAnimnation, FName _SectionName)
+{
+
+	UMonsterAnimInstance* MonsterAnimInstance = Cast<UMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+
+	if (nullptr != MonsterAnimInstance)
+	{
+		MonsterAnimInstance->ChangeAnimation(_CurAnimnation, _SectionName);
+	}
 }
 

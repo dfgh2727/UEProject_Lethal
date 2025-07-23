@@ -16,6 +16,7 @@ void UAIBTTaskNode::Start(UBehaviorTreeComponent& _OwnerComp)
 {
 }
 
+
 EBTNodeResult::Type UAIBTTaskNode::ExecuteTask(UBehaviorTreeComponent& _OwnerComp, uint8* NodeMemory)
 {
 	Super::ExecuteTask(_OwnerComp, NodeMemory);
@@ -27,13 +28,9 @@ EBTNodeResult::Type UAIBTTaskNode::ExecuteTask(UBehaviorTreeComponent& _OwnerCom
 		return EBTNodeResult::Type::Failed;
 	}
 
+	Start(_OwnerComp);
 
 	return EBTNodeResult::Type::InProgress;
-}
-
-void UAIBTTaskNode::TickTask(UBehaviorTreeComponent& _OwnerComp, uint8* _pNodeMemory, float _DeltaSeconds)
-{
-	Super::TickTask(_OwnerComp, _pNodeMemory, _DeltaSeconds);
 }
 
 FPlayAIData& UAIBTTaskNode::GetPlayAIData(UBehaviorTreeComponent& _OwnerComp)
@@ -41,3 +38,4 @@ FPlayAIData& UAIBTTaskNode::GetPlayAIData(UBehaviorTreeComponent& _OwnerComp)
 	UObject* Data = _OwnerComp.GetBlackboardComponent()->GetValueAsObject(ULCConst::AI::AIDataName);
 	return Cast<UAIDataObject>(Data)->PlayData;
 }
+ 

@@ -23,8 +23,6 @@ public:
 
 	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& _OwnerComp, uint8* NodeMemory) override;
 
-	void TickTask(UBehaviorTreeComponent& _OwnerComp, uint8* _pNodeMemory, float _DeltaSeconds) override;
-
 	FPlayAIData& GetPlayAIData(UBehaviorTreeComponent& _OwnerComp);
 
 protected:

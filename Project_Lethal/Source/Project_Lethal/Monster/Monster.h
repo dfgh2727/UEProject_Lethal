@@ -31,6 +31,8 @@ public:
 	UFUNCTION()
 	void OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	UFUNCTION(BlueprintCallable)
+	void ChangeAnimation(int _CurAnimnation, FName _SectionName = TEXT("None"));
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	FString DataKey = "";
