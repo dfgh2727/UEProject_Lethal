@@ -24,4 +24,12 @@ void UBTTaskNode_Idle::TickTask(UBehaviorTreeComponent& _OwnerComp, uint8* _pNod
 	Super::TickTask(_OwnerComp, _pNodeMemory, _DeltaSeconds);
 
 	FPlayAIData& PlayAIData = UAIBTTaskNode::GetPlayAIData(_OwnerComp);
+
+	PlayAIData.CurPatrolTime += _DeltaSeconds;
+
+	if (PlayAIData.CurPatrolTime > PlayAIData.Data.MaxPatrolTime)
+	{
+		ChangeState(_OwnerComp, EAIState::Patrol);
+		return;
+	}
 }

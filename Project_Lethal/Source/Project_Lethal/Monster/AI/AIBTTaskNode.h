@@ -25,6 +25,8 @@ public:
 
 	FPlayAIData& GetPlayAIData(UBehaviorTreeComponent& _OwnerComp);
 
+	void ChangeState(UBehaviorTreeComponent& _OwnerComp, EAIState _State);
+
 protected:
 	UPROPERTY(Category = "AI", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	EAIState AIStateValue = EAIState::MAX;

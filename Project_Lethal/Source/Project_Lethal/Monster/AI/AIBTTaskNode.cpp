@@ -23,10 +23,10 @@ EBTNodeResult::Type UAIBTTaskNode::ExecuteTask(UBehaviorTreeComponent& _OwnerCom
 
 	FPlayAIData& PlayAIData = UAIBTTaskNode::GetPlayAIData(_OwnerComp);
 
-	if (PlayAIData.AIState != EAIState::Idle)
-	{
-		return EBTNodeResult::Type::Failed;
-	}
+	//if (PlayAIData.AIState != EAIState::Idle)
+	//{
+	//	return EBTNodeResult::Type::Failed;
+	//}
 
 	Start(_OwnerComp);
 
@@ -37,5 +37,14 @@ FPlayAIData& UAIBTTaskNode::GetPlayAIData(UBehaviorTreeComponent& _OwnerComp)
 {
 	UObject* Data = _OwnerComp.GetBlackboardComponent()->GetValueAsObject(ULCConst::AI::AIDataName);
 	return Cast<UAIDataObject>(Data)->PlayData;
+}
+
+void UAIBTTaskNode::ChangeState(UBehaviorTreeComponent& _OwnerComp, EAIState _State)
+{
+	FPlayAIData& PlayAIData = UAIBTTaskNode::GetPlayAIData(_OwnerComp);
+
+	PlayAIData.AIState = _State;
+
+	FinishLatentTask(_OwnerComp, EBTNodeResult::Failed);
 }
  
