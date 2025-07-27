@@ -3,3 +3,12 @@
 
 #include "Global/GameMode/PlayGameMode.h"
 
+APlayGameMode::APlayGameMode()
+{
+
+}
+
+void APlayGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+}

@@ -3,3 +3,12 @@
 
 #include "Global/GameMode/TitleGameMode.h"
 
+ATitleGameMode::ATitleGameMode()
+{
+
+}
+
+void ATitleGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+}

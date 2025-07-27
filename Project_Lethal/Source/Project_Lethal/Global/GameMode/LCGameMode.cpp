@@ -3,3 +3,12 @@
 
 #include "Global/GameMode/LCGameMode.h"
 
+ALCGameMode::ALCGameMode()
+{
+
+}
+
+void ALCGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+}

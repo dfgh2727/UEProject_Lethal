@@ -13,5 +13,11 @@ UCLASS()
 class PROJECT_LETHAL_API APlayGameMode : public ALCGameMode
 {
 	GENERATED_BODY()
+
+public:
+
+	APlayGameMode();
+
+	virtual void BeginPlay() override;
 	
 };
