@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Global/GameMode/LCGameMode.h"
+#include "Global/GameMode/PlayGameMode.h"
 
-ALCGameMode::ALCGameMode()
+APlayGameMode::APlayGameMode()
 {
 
 }
 
-void ALCGameMode::BeginPlay()
+void APlayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 }

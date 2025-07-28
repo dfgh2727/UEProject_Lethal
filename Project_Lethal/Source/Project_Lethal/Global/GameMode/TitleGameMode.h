@@ -3,23 +3,21 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameMode.h"
-#include "LCGameMode.generated.h"
+#include "Global/GameMode/LCGameMode.h"
+#include "TitleGameMode.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PROJECT_LETHAL_API ALCGameMode : public AGameMode
+class PROJECT_LETHAL_API ATitleGameMode : public ALCGameMode
 {
 	GENERATED_BODY()
 
 public:
 
-	ALCGameMode();
-
+	ATitleGameMode();
+	
 	virtual void BeginPlay() override;
 	
 };
-
-//게임내 GameMode들의 상위 클래스
