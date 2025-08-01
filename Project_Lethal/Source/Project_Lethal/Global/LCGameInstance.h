@@ -18,4 +18,12 @@ public:
 
 	ULCGameInstance();
 	~ULCGameInstance();
+
+	void StartAsHost();
+	void StartAsClient();
+
+private:
+
+	bool bHostExist = false;
+	bool bGameStarted = false;
 };

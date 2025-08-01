@@ -13,3 +13,22 @@ ULCGameInstance::~ULCGameInstance()
 {
 	 
 }
+
+void ULCGameInstance::StartAsHost()
+{
+
+}
+
+void ULCGameInstance::StartAsClient()
+{
+	if (bHostExist == true)
+	{
+
+	}
+
+	if (bGameStarted == true)
+	{
+
+	}
+
+}
