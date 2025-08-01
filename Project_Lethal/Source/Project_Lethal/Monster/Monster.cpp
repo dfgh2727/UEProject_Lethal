@@ -61,6 +61,7 @@ void AMonster::BeginPlay()
 	AIData = NewObject<UAIDataObject>(this);
 	AIData->PlayData.Data = FindData->AIData;
 	AIData->PlayData.SelfAnimPawn = this;
+	AIData->PlayData.SelfPawn = this;
 	AIData->PlayData.OriginPos = GetActorLocation();
 
 	// BlackBoard의 AIData 설정해주기
