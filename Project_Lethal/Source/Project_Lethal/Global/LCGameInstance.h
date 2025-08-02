@@ -22,8 +22,15 @@ public:
 	void StartAsHost();
 	void StartAsClient();
 
+	UPROPERTY(EditAnywhere, Category = "Level")
+	TSoftObjectPtr<UWorld> TitleLevel;
+
+	UPROPERTY(EditAnywhere, Category = "Level")
+	TSoftObjectPtr<UWorld> PlayLevel;
+
+	UPROPERTY(EditAnywhere, Category = "Num")
+	FString Port = TEXT("1234");
+
 private:
 
-	bool bHostExist = false;
-	bool bGameStarted = false;
 };
