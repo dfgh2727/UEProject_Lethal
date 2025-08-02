@@ -20,7 +20,7 @@ public:
 	~ULCGameInstance();
 
 	void StartAsHost();
-	void StartAsClient();
+	void StartAsClient(FString IP, APlayerController* PlayerController);
 
 	UPROPERTY(EditAnywhere, Category = "Level")
 	TSoftObjectPtr<UWorld> TitleLevel;

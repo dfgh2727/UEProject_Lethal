@@ -24,7 +24,8 @@ public:
 	static ULCGameInstance* GetLCGameInstance(const UWorld* World);
 
 	UFUNCTION(BlueprintCallable)
-	static void StartServer(const UWorld* World, const FString& Port, const FString& LevelName);
+	static void StartServer(UWorld* World/*, const FString& Port, const FString& LevelName*/);
 
-	
+	UFUNCTION(BlueprintCallable)
+	static void ConnectServer(UWorld* World, APlayerController* PlayerController, FString& IP/*, FString& Port*/);
 };
