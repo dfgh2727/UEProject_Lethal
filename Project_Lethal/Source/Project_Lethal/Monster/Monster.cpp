@@ -95,18 +95,34 @@ void AMonster::BeginPlay()
 
 
    
-
-    // Replace the problematic line with the following:
-    UMonsterAnimInstance* MonsterAnimInstance = Cast<UMonsterAnimInstance>(GetMesh()->GetAnimInstance());
-    if (nullptr != MonsterAnimInstance)
+    UMonsterAnimInstance* CurAnimInstance = Cast<UMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+    if (nullptr != CurAnimInstance)
     {
 		for (auto AnimPair : FindData->Animations)
 		{
-			MonsterAnimInstance->AnimMontages.Add(static_cast<int>(AnimPair.Key), AnimPair.Value);
+			CurAnimInstance->AnimMontages.Add(static_cast<int>(AnimPair.Key), AnimPair.Value);
+		}
+
+		if (nullptr != Con)
+		{
+			AIData->PlayData.MonsterAnimInstance = CurAnimInstance;
 		}
     }   
+
+	//ChangeAnimation_Multicast()
 	Super::BeginPlay();
+
+	NetSyncMonster();
 	
+}
+void AMonster::NetSyncMonster()
+{
+
+	int CurAnimation = Cast<UMonsterAnimInstance>(GetMesh()->GetAnimInstance())->GetCurAnimationType();
+
+	ChangeAnimation_Multicast(CurAnimation);
+
+
 }
 
 // Called every frame
@@ -134,12 +150,18 @@ void AMonster::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent,
 {
 }
 
+void AMonster::ChangeAnimation_Implementation(int _CurAnimnation, FName _SectionName)
+{
+
+	ChangeAnimation_Multicast(_CurAnimnation, _SectionName);
+}
+
 void AMonster::ChangeAnimation_Multicast_Implementation(int _CurAnimnation, FName _SectionName)
 {
-	UMonsterAnimInstance* MonsterAnimInstance = Cast<UMonsterAnimInstance>(GetMesh()->GetAnimInstance());
+	UMonsterAnimInstance* CurAnimInstance = Cast<UMonsterAnimInstance>(GetMesh()->GetAnimInstance());
 
-	if (nullptr != MonsterAnimInstance)
+	if (nullptr != CurAnimInstance)
 	{
-		MonsterAnimInstance->ChangeAnimation(_CurAnimnation, _SectionName);
+		CurAnimInstance->ChangeAnimation(_CurAnimnation, _SectionName);
 	}
 }

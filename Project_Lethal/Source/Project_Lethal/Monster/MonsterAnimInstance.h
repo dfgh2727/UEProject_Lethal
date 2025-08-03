@@ -19,6 +19,8 @@ public:
 
 	void NativeUpdateAnimation(float DetlaSeconds) override;
 
+	//void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+
 	template<typename EnumType>
 	void ChangeAnimation(EnumType _Animation, FName _SectionName = TEXT("None"))
 	{
@@ -39,9 +41,15 @@ public:
 	TMap<int, UAnimMontage*> AnimMontages;
 
 private:
+
+	//UPROPERTY(Replicated, BlueprintReadWrite, Category = "Anim", meta = (AllowPrivateAccess = "true"))
 	int CurAnimationType = 0;
 
+	//UPROPERTY(Replicated, BlueprintReadWrite, Category = "Anim", meta = (AllowPrivateAccess = "true"))
+
 	FName SectionName = TEXT("");
+
+	//UPROPERTY(Replicated, BlueprintReadWrite, Category = "Anim", meta = (AllowPrivateAccess = "true"))
 
 	UAnimMontage* CurMontage;
 

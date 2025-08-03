@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "MonsterDataTable.h"
+//#include "Monster/MonsterAnimInstance.h"
 #include "Monster.generated.h"
 
 
@@ -22,9 +23,12 @@ public:
 		DataKey = _ItemDataKey;
 	}
 
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+
 
 public:	
 	// Called every frame
@@ -35,14 +39,19 @@ public:
 
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 	
-	
+	void NetSyncMonster();
 	
 	UFUNCTION()
 	void OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	UFUNCTION(BlueprintCallable, Reliable, Server)
+	void ChangeAnimation(int _CurAnimnation, FName _SectionName = TEXT("None"));
+	void ChangeAnimation_Implementation(int _CurAnimnation, FName _SectionName = TEXT("None"));
+
 	UFUNCTION(BlueprintCallable, Reliable, NetMulticast)
 	void ChangeAnimation_Multicast(int _CurAnimnation, FName _SectionName = TEXT("None"));
 	void ChangeAnimation_Multicast_Implementation(int _CurAnimnation, FName _SectionName = TEXT("None"));
+
 
 	UPROPERTY(EditAnywhere, Replicated, BlueprintReadWrite, Category = "Data")
 	FString DataKey = "";
@@ -57,4 +66,6 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Data")
 	class UDataTable* DataTables = nullptr;
 	class UDataTable* MonsterDataTable = nullptr;
+
+
 };

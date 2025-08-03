@@ -19,6 +19,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	AActor* CreateMonster(const FString& _ItemName, FVector _OriginPos);
 
+	void NetSyncMonster();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

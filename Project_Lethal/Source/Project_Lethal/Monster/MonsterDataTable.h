@@ -49,7 +49,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	FAIData Data;
 
-	EAIState AIState = EAIState::Idle;
+	EAIState AIState = EAIState::Spawn;
 	double CurHP = 100;
 	class APawn* SelfPawn = nullptr;
 	AActor* TargetActor = nullptr;
@@ -60,7 +60,7 @@ public:
 	TArray<FVector> PatrolPos;
 
 	class AMonster* SelfAnimPawn = nullptr;
-	//class UMonsterAnimInstance* MonsterAninInstance = nullptr;
+	class UMonsterAnimInstance* MonsterAnimInstance = nullptr;
 };
 
 UCLASS(BlueprintType)

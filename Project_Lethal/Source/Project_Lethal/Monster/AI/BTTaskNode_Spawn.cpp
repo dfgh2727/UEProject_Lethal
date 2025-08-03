@@ -17,6 +17,16 @@ void UBTTaskNode_Spawn::Start(UBehaviorTreeComponent& _OwnerComp)
 void UBTTaskNode_Spawn::TickTask(UBehaviorTreeComponent& _OwnerComp, uint8* _pNodeMemory, float _DeltaSeconds)
 {
 	Super::TickTask(_OwnerComp, _pNodeMemory, _DeltaSeconds);
+
+	FPlayAIData& PlayAIData = UAIBTTaskNode::GetPlayAIData(_OwnerComp);
+
+	CurSpanwTime += _DeltaSeconds;
+
+	if(CurSpanwTime >5.0f)
+	{
+		ChangeState(_OwnerComp, EAIState::Idle);
+		return;
+	}
 }
 
 UBTTaskNode_Spawn::UBTTaskNode_Spawn()

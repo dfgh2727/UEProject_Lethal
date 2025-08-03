@@ -2,6 +2,7 @@
 
 
 #include "Monster/MonsterAnimInstance.h"
+#include <Net/UnrealNetwork.h>
 
 void UMonsterAnimInstance::NativeBeginPlay()
 {
@@ -13,6 +14,8 @@ void UMonsterAnimInstance::NativeUpdateAnimation(float DetlaSeconds)
 {
 	Super::NativeUpdateAnimation(DetlaSeconds);
 }
+
+
 
 void UMonsterAnimInstance::ChangeAnimation(int _CurAnimationType, FName _SectionName)
 {

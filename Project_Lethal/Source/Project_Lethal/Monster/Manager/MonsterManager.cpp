@@ -37,6 +37,10 @@ AActor* UMonsterManager::CreateMonster(const FString& _ItemName, FVector _Origin
 	else return nullptr;
 }
 
+void UMonsterManager::NetSyncMonster()
+{
+}
+
 
 // Called when the game starts
 void UMonsterManager::BeginPlay()
