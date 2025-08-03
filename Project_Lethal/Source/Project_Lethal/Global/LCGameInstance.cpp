@@ -4,6 +4,9 @@
 #include "Global/LCGameInstance.h"
 //#include "LCGameInstance.h"
 
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetSystemLibrary.h"
+
 ULCGameInstance::ULCGameInstance()
 {
 
@@ -12,4 +15,22 @@ ULCGameInstance::ULCGameInstance()
 ULCGameInstance::~ULCGameInstance()
 {
 	 
+}
+
+void ULCGameInstance::StartAsHost()
+{
+	FString TitleLevelName = TitleLevel.GetLongPackageName();
+	FString OpenLevelName = FString::Printf(TEXT(":%s%s"), *Port, *TitleLevelName);
+	UGameplayStatics::OpenLevel(GetWorld(), *OpenLevelName, true, TEXT("listen"));
+}
+
+void ULCGameInstance::StartAsClient(FString IP, APlayerController* PlayerController)
+{
+	FString TitleLevelName = TitleLevel.GetLongPackageName();
+	FString ConnectLevelName = FString::Printf(TEXT("%s:%s%s"), *IP, *Port, *TitleLevelName);
+
+	if (PlayerController != nullptr)
+	{
+		PlayerController->ClientTravel(ConnectLevelName, ETravelType::TRAVEL_Absolute);
+	}
 }
