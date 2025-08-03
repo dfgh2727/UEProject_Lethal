@@ -17,6 +17,11 @@ public:
 	// Sets default values for this character's properties
 	AMonster();
 
+	void SetDataKey(const FString& _ItemDataKey)
+	{
+		DataKey = _ItemDataKey;
+	}
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -28,19 +33,24 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+	
+	
+	
 	UFUNCTION()
 	void OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	UFUNCTION(BlueprintCallable)
-	void ChangeAnimation(int _CurAnimnation, FName _SectionName = TEXT("None"));
+	UFUNCTION(BlueprintCallable, Reliable, NetMulticast)
+	void ChangeAnimation_Multicast(int _CurAnimnation, FName _SectionName = TEXT("None"));
+	void ChangeAnimation_Multicast_Implementation(int _CurAnimnation, FName _SectionName = TEXT("None"));
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	UPROPERTY(EditAnywhere, Replicated, BlueprintReadWrite, Category = "Data")
 	FString DataKey = "";
 
 private:
 	const FMonsterDataRow* Data = nullptr;
 
-	UPROPERTY(VisibleAnywhere, Category = "Data")
+	UPROPERTY(VisibleAnywhere, Replicated, Category = "Data")
 	class UAIDataObject* AIData = nullptr;
 
 

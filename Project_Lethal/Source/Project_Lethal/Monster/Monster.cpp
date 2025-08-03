@@ -9,6 +9,7 @@
 #include "Monster/MonsterDataTable.h"
 #include "Engine/SkeletalMesh.h"
 #include "Monster/MonsterAnimInstance.h" // Add this include to resolve UMonsterAnimInstance
+#include <Net/UnrealNetwork.h>
 
 
 // Sets default values
@@ -16,6 +17,10 @@ AMonster::AMonster()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	bReplicates = true; 
+
+
+
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMonster::OnComponentBeginOverlap);
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
@@ -38,6 +43,16 @@ AMonster::AMonster()
 // Called when the game starts or when spawned
 void AMonster::BeginPlay()
 {
+
+	if (GetWorld()->GetAuthGameMode())
+	{
+		int a = 0;
+	}
+	else
+	{
+		int a = 0;
+	}
+
 	if (DataKey == TEXT("") || true == DataKey.IsEmpty())
 	{
 		//(GMLOG, Error, TEXT("%S(%u)> if (ItemDataKey == TEXT("") || true == ItemDataKey.IsEmpty())"), __FUNCTION__, __LINE__);
@@ -56,16 +71,22 @@ void AMonster::BeginPlay()
 	
 	AMonsterAIController* Con = Cast<AMonsterAIController>(GetController());
 
-	if (nullptr == Con) return;
+	if (nullptr != Con)
+	{
+		AIData = NewObject<UAIDataObject>(this);
+		AIData->PlayData.Data = FindData->AIData;
+		AIData->PlayData.SelfAnimPawn = this;
+		AIData->PlayData.SelfPawn = this;
+		AIData->PlayData.OriginPos = GetActorLocation();
 
-	AIData = NewObject<UAIDataObject>(this);
-	AIData->PlayData.Data = FindData->AIData;
-	AIData->PlayData.SelfAnimPawn = this;
-	AIData->PlayData.SelfPawn = this;
-	AIData->PlayData.OriginPos = GetActorLocation();
+		// BlackBoard의 AIData 설정해주기
+		Con->GetBlackboardComponent()->SetValueAsObject(TEXT("AIData"), AIData);
 
-	// BlackBoard의 AIData 설정해주기
-	Con->GetBlackboardComponent()->SetValueAsObject(TEXT("AIData"), AIData);
+	}
+
+
+
+
 	
 
 	GetMesh()->SetSkeletalMesh(FindData->Mesh);
@@ -102,13 +123,19 @@ void AMonster::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void AMonster::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AMonster, DataKey);
+}
+
 void AMonster::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 }
 
-void AMonster::ChangeAnimation(int _CurAnimnation, FName _SectionName)
+void AMonster::ChangeAnimation_Multicast_Implementation(int _CurAnimnation, FName _SectionName)
 {
-
 	UMonsterAnimInstance* MonsterAnimInstance = Cast<UMonsterAnimInstance>(GetMesh()->GetAnimInstance());
 
 	if (nullptr != MonsterAnimInstance)
@@ -116,4 +143,3 @@ void AMonster::ChangeAnimation(int _CurAnimnation, FName _SectionName)
 		MonsterAnimInstance->ChangeAnimation(_CurAnimnation, _SectionName);
 	}
 }
-

@@ -15,7 +15,7 @@ void UBTTaskNode_Idle::Start(UBehaviorTreeComponent& _OwnerComp)
 
 	if (nullptr != PlayAIData.SelfAnimPawn)
 	{
-		PlayAIData.SelfAnimPawn->ChangeAnimation(static_cast<int>(AIStateValue)); // 0 Àº Idle
+		PlayAIData.SelfAnimPawn->ChangeAnimation_Multicast(static_cast<int>(AIStateValue)); // 0 Àº Idle
 	}
 }
 
@@ -25,6 +25,12 @@ void UBTTaskNode_Idle::TickTask(UBehaviorTreeComponent& _OwnerComp, uint8* _pNod
 
 	FPlayAIData& PlayAIData = UAIBTTaskNode::GetPlayAIData(_OwnerComp);
 
+	if (nullptr != PlayAIData.TargetActor)
+	{
+		ChangeState(_OwnerComp, EAIState::Trace);
+		return;
+	}
+
 	PlayAIData.CurPatrolTime += _DeltaSeconds;
 
 	if (PlayAIData.CurPatrolTime > PlayAIData.Data.MaxPatrolTime)
@@ -32,4 +38,6 @@ void UBTTaskNode_Idle::TickTask(UBehaviorTreeComponent& _OwnerComp, uint8* _pNod
 		ChangeState(_OwnerComp, EAIState::Patrol);
 		return;
 	}
+
+	
 }

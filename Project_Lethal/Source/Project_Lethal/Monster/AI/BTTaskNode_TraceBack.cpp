@@ -12,7 +12,7 @@ void UBTTaskNode_TraceBack::Start(UBehaviorTreeComponent& _OwnerComp)
 
 	if (nullptr != PlayAIData.SelfAnimPawn)
 	{
-		PlayAIData.SelfAnimPawn->ChangeAnimation(static_cast<int>(AIStateValue)); // 0 Àº Idle
+		PlayAIData.SelfAnimPawn->ChangeAnimation_Multicast(static_cast<int>(AIStateValue)); // 0 Àº Idle
 	}
 }
 
