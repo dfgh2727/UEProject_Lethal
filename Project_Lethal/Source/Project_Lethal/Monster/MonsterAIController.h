@@ -13,5 +13,11 @@ UCLASS()
 class PROJECT_LETHAL_API AMonsterAIController : public AAIController
 {
 	GENERATED_BODY()
+
+public:
+	AMonsterAIController() {
+		GetBlackboardComponent();
+	};
+	
 	
 };

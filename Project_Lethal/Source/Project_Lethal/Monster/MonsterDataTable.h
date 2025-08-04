@@ -49,7 +49,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	FAIData Data;
 
-	EAIState AIState = EAIState::Idle;
+	EAIState AIState = EAIState::Spawn;
 	double CurHP = 100;
 	class APawn* SelfPawn = nullptr;
 	AActor* TargetActor = nullptr;
@@ -58,6 +58,9 @@ public:
 
 	double CurPatrolTime = 0.0f;
 	TArray<FVector> PatrolPos;
+
+	class AMonster* SelfAnimPawn = nullptr;
+	class UMonsterAnimInstance* MonsterAnimInstance = nullptr;
 };
 
 UCLASS(BlueprintType)
@@ -92,11 +95,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	class USkeletalMesh* Mesh = nullptr;
 
-	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-	TMap<EAIState, UAnimMontage*> Animations;*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	TMap<EAIState, UAnimMontage*> Animations;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	TSubclassOf<UAnimInstance> AnimationBluePrint;
+
+	
 };
 
 UCLASS()
