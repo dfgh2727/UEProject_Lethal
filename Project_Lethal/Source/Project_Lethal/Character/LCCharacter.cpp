@@ -2,6 +2,9 @@
 
 
 #include "Character/LCCharacter.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
+
 
 // Sets default values
 ALCCharacter::ALCCharacter()
